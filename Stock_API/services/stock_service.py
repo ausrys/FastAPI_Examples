@@ -2,6 +2,7 @@
 from datetime import datetime
 
 
+from exceptions import AppException
 import yfinance as yf
 from db_singleton import DatabaseSingleton
 
@@ -11,7 +12,24 @@ cursor = db.get_cursor()
 
 def fetch_stock(stock_name: str):
     stock = yf.Ticker(stock_name)
+    try:
+        stock.info
+    except AttributeError as exc:
+        raise AppException(description='''Provided stock name was incorrect''',
+                           solve="Check if values are correct",
+                           status_code=400
+                           ) from exc
     return stock
+
+
+def get_history_data(stock, period):
+    data = stock.history(period=period.lower())
+    if len(data) == 0:
+        raise AppException(
+            status_code=400, description='''Provided period was incorrect or
+            there was no data''', solve="Check parameters")
+
+    return data
 
 
 def save_data(name: str):

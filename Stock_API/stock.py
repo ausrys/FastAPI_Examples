@@ -26,7 +26,7 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS requests (
 
 
 @app.exception_handler(StarletteHTTPException)
-async def custom_http_exception_handler(request: Request,
+async def custom_http_exception_handler(_: Request,
                                         exc: StarletteHTTPException):
     if exc.status_code == 404:
         return JSONResponse(
@@ -39,7 +39,7 @@ async def custom_http_exception_handler(request: Request,
 
 
 @app.exception_handler(AppException)
-async def custom_error_exception_handle(request: Request, exc: AppException):
+async def custom_error_exception_handle(_: Request, exc: AppException):
     return JSONResponse(status_code=exc.status_code,
                         content={"description": exc.description,
                                  "solve": exc.solve})
