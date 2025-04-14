@@ -12,6 +12,11 @@ The app uses the `yfinance` package to retrieve data and `FastAPI` for the web f
 ## [Confluence page](https://orioninc-team-kyh3w470.atlassian.net/wiki/spaces/~712020da8e289c17a1423fa042ec5ea224cc6a/pages/131260/Stock+FASTAPI)
 ---
 
+
+---
+## [SolarCloud](https://sonarcloud.io/project/overview?id=ausrys_FastAPI_Examples)
+---
+
 ## 🚀 Features
 
 - Get closing prices for a stock over a time period
