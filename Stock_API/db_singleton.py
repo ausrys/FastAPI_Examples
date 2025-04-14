@@ -10,7 +10,8 @@ class DatabaseSingleton:
             cls._instance = super(DatabaseSingleton, cls).__new__(cls)
             # Define attributes explicitly to avoid linter warnings
             cls._instance.db_name = db_name
-            cls._instance.connection = sqlite3.connect(db_name)
+            cls._instance.connection = sqlite3.connect(
+                db_name, check_same_thread=False)
             cls._instance.cursor = cls._instance.connection.cursor()
         return cls._instance
 

@@ -1,2 +1,5 @@
 __pycache__
 testing.py
+.mypy_cache
+.pytest_cache
+.venv
