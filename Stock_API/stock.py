@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from db_singleton import DatabaseSingleton
 
+from exceptions import AppException
 from api.routes import router
 
 app = FastAPI()
@@ -31,10 +32,14 @@ async def custom_http_exception_handler(request: Request,
         return JSONResponse(
             status_code=404,
             content={
-                "detail": "Route does not exist, check README file https://github.com/ausrys/FastAPI_Examples/\
+                "descriptiom": "Route does not exist!",
+                "solve": "check README file https://github.com/ausrys/FastAPI_Examples/\
                     tree/main/Stock_API"},
         )
-    return JSONResponse(
-        status_code=exc.status_code,
-        content={"detail": exc.detail},
-    )
+
+
+@app.exception_handler(AppException)
+async def custom_error_exception_handle(request: Request, exc: AppException):
+    return JSONResponse(status_code=exc.status_code,
+                        content={"description": exc.description,
+                                 "solve": exc.solve})

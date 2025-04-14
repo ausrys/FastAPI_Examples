@@ -9,10 +9,9 @@ db = DatabaseSingleton("requests.db")
 cursor = db.get_cursor()
 
 
-def fetch_stock_data(stock_name: str, period: str):
+def fetch_stock(stock_name: str):
     stock = yf.Ticker(stock_name)
-    data = stock.history(period=period)
-    return data
+    return stock
 
 
 def save_data(name: str):
