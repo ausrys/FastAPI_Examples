@@ -9,6 +9,8 @@ This is a simple FastAPI-based API for fetching stock data using the [Yahoo Fina
 The app uses the `yfinance` package to retrieve data and `FastAPI` for the web framework.
 
 ---
+## [Confluence page](https://orioninc-team-kyh3w470.atlassian.net/wiki/spaces/~712020da8e289c17a1423fa042ec5ea224cc6a/pages/131260/Stock+FASTAPI)
+---
 
 ## 🚀 Features
 

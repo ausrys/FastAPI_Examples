@@ -31,8 +31,7 @@ async def custom_http_exception_handler(request: Request,
         return JSONResponse(
             status_code=404,
             content={
-                "detail": "Route does not exist, check README file\
-                    https://github.com/ausrys/FastAPI_Examples/\
+                "detail": "Route does not exist, check README file https://github.com/ausrys/FastAPI_Examples/\
                     tree/main/Stock_API"},
         )
     return JSONResponse(
