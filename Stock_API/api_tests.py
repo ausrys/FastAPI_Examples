@@ -42,7 +42,6 @@ def test_check_db_time():
     assert 'time_records' in data
     assert isinstance(data['time_records'], list)
     response = client.get("/check_db_time?time=1")
-    data = response.json()
     assert response.status_code == 404
     assert "description" in response.json()
     assert "solve" in response.json()

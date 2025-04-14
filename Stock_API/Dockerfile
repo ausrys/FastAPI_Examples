@@ -1,5 +1,4 @@
-FROM python:3.11-slim
-WORKDIR .
+FROM python:3.13-slim
 COPY requirements.txt .
 COPY . .
 
