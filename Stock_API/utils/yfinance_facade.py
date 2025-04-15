@@ -32,7 +32,7 @@ class FinanceFacade:
 
     def get_period_prices(self, period):
         hist_data = self.__get_history_data(period)
-        return list(hist_data['Cloe'])
+        return list(hist_data['Close'])
 
     def get_period_volumes(self, period):
         hist_data = self.__get_history_data(period)

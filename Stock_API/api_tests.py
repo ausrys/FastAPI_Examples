@@ -10,6 +10,8 @@ def test_get_stock_price():
     assert response.status_code == 200
     data = response.json()
     assert isinstance(data['stock_price'], list)
+    assert len(data['stock_price']) == 7
+    assert all(isinstance(item, float) for item in data['stock_price'])
     response = client.post(
         "/get_stock_price", json={"stock_name": "msft", "period": "ad"})
     assert response.status_code == 400
@@ -23,6 +25,7 @@ def test_get_stock_volume():
     assert response.status_code == 200
     data = response.json()
     assert isinstance(data['MSFT volume'], list)
+    assert len(data['MSFT volume']) == 7
     response = client.post(
         "/get_stock_volume", json={"stock_name": "msft", "period": "d"})
     assert response.status_code == 400
@@ -41,6 +44,7 @@ def test_check_db_time():
     data = response.json()
     assert 'time_records' in data
     assert isinstance(data['time_records'], list)
+    assert len(data['time_records'][0]) == 8
     response = client.get("/check_db_time?time=1")
     assert response.status_code == 404
     assert "description" in response.json()

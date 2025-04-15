@@ -42,6 +42,12 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 pip install -r requirements.txt
 ```
+
+Run the program:
+```
+fastapi run stock.py
+```
+
 Run the program in dev:
 ```
 fastapi dev stock.py
@@ -54,7 +60,7 @@ uvicorn main:stock --reload
 
 ```
 docker build -t stock-api .
-docker run stock-api
+docker run -p 8000:8000 stock-api
 ```
 
 
