@@ -193,3 +193,7 @@ The period field supports any duration valid in the Yahoo Finance history method
 6mo, 1y, 2y, 5y, 10y
 
 ytd (year-to-date), max
+
+## Migration
+
+SQLITE to DynamoDB migration process -> [Migration process](https://github.com/ausrys/FastAPI_Examples/blob/main/Stock_API/read_files/migration_to_dynamodb.MD)
