@@ -1,0 +1,6 @@
+**/.mypy_cache/
+**/.env
+**/.env.*
+**/.venv/
+**/__pycache__/
+sports.db
