@@ -16,7 +16,7 @@ services:
   worker:
     build: .
     container_name: fastapi_worker
-    command: celery -A celery_worker.celery_app worker --loglevel=info -P solo
+    command: celery -A celery_worker.celery_app worker --loglevel=info
     volumes:
       - .:/app
     working_dir: /app
@@ -37,4 +37,4 @@ services:
     image: redis:7
     container_name: redis
     ports:
-      - "6380:6380"
+      - "6379:6379"
