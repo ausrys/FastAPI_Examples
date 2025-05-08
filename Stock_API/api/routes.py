@@ -42,3 +42,10 @@ async def get_full_table():
 async def check_db_time(time: int):
     rows = get_records_by_time(time)
     return {"time_records": rows}
+
+
+@router.get("/get_msft_api")
+async def get_msft_api():
+    stock = FinanceFacade('msft')
+    msft_current = stock.get_stock_info('regularMarketPrice')
+    return {"name": "msft", "msft_stock_price_current": msft_current}
