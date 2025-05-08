@@ -9,17 +9,15 @@ from celery_app import celery_app
 def scrape_data():
     db = SessionLocal()
     try:
-        news_items = scrape_sport_news()
+        news_item = scrape_sport_news()
 
-        for item in news_items:
-            news = SportNews(**item)
-            db.add(news)
+        news = SportNews(**news_item)
+        db.add(news)
 
-        event_items = scrape_sport_events()
+        event_item = scrape_sport_events()
 
-        for item in event_items:
-            event = SportEvent(**item)
-            db.add(event)
+        event = SportEvent(**event_item)
+        db.add(event)
 
         db.commit()
     except Exception as e:

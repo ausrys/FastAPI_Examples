@@ -23,30 +23,26 @@ def scrape_sport_news():
 
     time.sleep(2)  # Let content load
 
-    news_data = []
+    news_data = {}
     try:
-        articles = driver.find_elements(By.CSS_SELECTOR, 'div[type="article"]')
-        for article in articles[:10]:  # Limit to first 10
+        article = driver.find_element(
+            By.CSS_SELECTOR, 'div[type="article"]')  # Limit to first 10
+        try:
+            # Get the first <a> tag inside the article div
+            link_element = article.find_element(By.TAG_NAME, 'a')
+            url = link_element.get_attribute("href")
 
-            try:
-                # Get the first <a> tag inside the article div
-                link_element = article.find_element(By.TAG_NAME, 'a')
-                url = link_element.get_attribute("href")
+            # Get the first <span> tag inside the article div for the title
+            title_element = article.find_element(By.TAG_NAME, 'span')
+            title = title_element.text.strip()
+            if title and url:
+                news_data = {
+                    "title": title,
+                    "url": url,
+                }
 
-                # Get the first <span> tag inside the article div for the title
-                title_element = article.find_element(By.TAG_NAME, 'span')
-                title = title_element.text.strip()
-
-                if title and url:
-                    news_data.append({
-                        "title": title,
-                        "content": "",  # Optional
-                        "url": url,
-                        "published_at": datetime.utcnow()
-                    })
-
-            except Exception as inner_err:
-                print(f"Skipping article due to error: {inner_err}")
+        except Exception as inner_err:
+            print(f"Skipping article due to error: {inner_err}")
 
     finally:
         driver.quit()
@@ -56,10 +52,10 @@ def scrape_sport_news():
 
 def scrape_sport_events():
     # Simulate event data (BBC/ESPN don't have simple event list pages)
-    return [{
+    return {
         "name": "Football Match: Team A vs Team B",
         "location": "London",
         "date": datetime.utcnow() + timedelta(days=3),
         "description": "Premier League match",
         "url": "https://www.bbc.com/sport/football"
-    }]
+    }

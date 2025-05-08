@@ -20,17 +20,18 @@ def get_db():
 
 @router.get("/news", summary="Get latest world sport news")
 def get_sport_news(db: Session = Depends(get_db)):
-    news = db.query(SportNews).order_by(
-        SportNews.published_at.desc()).limit(10).all()
-    return [
-        {
-            "title": item.title,
-            "content": item.content,
-            "url": item.url,
-            "published_at": item.published_at.isoformat()
-        }
-        for item in news
-    ]
+    # Fetch the latest news entry from the database
+    latest_news = db.query(SportNews).order_by(SportNews.id.desc()).first()
+
+    # If there is no news in the database, return a message
+    if latest_news is None:
+        return {"message": "No news found."}
+
+    # Return the latest news entry as a dictionary
+    return {
+        "title": latest_news.title,
+        "url": latest_news.url
+    }
 
 
 @router.get("/events", summary="Get upcoming world sport events")
@@ -38,16 +39,7 @@ def get_sport_events(db: Session = Depends(get_db)):
     now = datetime.utcnow()
     events = db.query(SportEvent).filter(SportEvent.date >=
                                          now).order_by(SportEvent.date).limit(10).all()
-    return [
-        {
-            "name": event.name,
-            "location": event.location,
-            "date": event.date.isoformat(),
-            "description": event.description,
-            "url": event.url
-        }
-        for event in events
-    ]
+    return events[0]
 
 
 @router.get("/dev-scrape", summary="Dev-only scrape trigger")

@@ -8,9 +8,7 @@ class SportNews(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
-    content = Column(Text)
     url = Column(String)
-    published_at = Column(DateTime, default=datetime.utcnow)
 
 
 class SportEvent(Base):
