@@ -2,8 +2,8 @@ from celery import Celery
 
 celery_app = Celery(
     "worker",
-    broker="redis://redis:6379/0",
-    backend="redis://redis:6379/0"
+    broker='redis://localhost:6380/1',
+    backend='redis://localhost:6380/1'
 )
 
 celery_app.conf.timezone = "UTC"
