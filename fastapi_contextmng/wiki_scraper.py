@@ -1,28 +1,42 @@
 import re
+import uuid
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+
 from bs4 import BeautifulSoup
 
 from exceptions import ArticleNotFoundError, NoValidParagraphError
 
 
 def get_first_5_sentences_from_wikipedia(query):
-    options = webdriver.ChromeOptions()
-    # Comment this out if you want to see the browser
-    options.add_argument('--headless')
-    driver = webdriver.Chrome(service=Service(
-        ChromeDriverManager().install()), options=options)
+
+    # Google drive options for scraping
+    options = Options()
+    options.add_argument("--headless=new")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920x1080")
+
+    # Use isolated profile
+    options.add_argument(f"--user-data-dir=/tmp/chrome-profile-{uuid.uuid4()}")
+
+    # This is the critical part
+    driver_path = ChromeDriverManager().install()
+    service = Service(driver_path)
+    driver = webdriver.Chrome(service=service, options=options)
 
     try:
         driver.get("https://wikipedia.org")
 
-        wait = WebDriverWait(driver, 2)
+        wait = WebDriverWait(driver, 3)
 
         # Wait for the search input on main page
         search_input = wait.until(
@@ -32,7 +46,7 @@ def get_first_5_sentences_from_wikipedia(query):
 
         # Wait for article page to load
         wait.until(EC.presence_of_element_located((By.ID, "mw-content-text")))
-
+        # To get the data in more readable way
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         content = soup.find('div', {'class': 'mw-content-ltr'})
 
